@@ -2,52 +2,43 @@ import RPi.GPIO as GPIO
 import time
 GPIO.setmode(GPIO.BCM)
 
-def iniciar(pin):
-	print "Iniciar PIN: " + str(pin)
-	GPIO.setup( pin , GPIO.OUT )
+def iniciar_entrada(pin):
+	GPIO.setup(pin, GPIO.IN, GPIO.PUD_UP)
+	print "Iniciar entrada en PIN: " + str(pin)
+
+def iniciar_salida(pin):
+	GPIO.setup(pin , GPIO.OUT)
+	print "Iniciar salida en PIN: " + str(pin)
 	# GPIO como salida
 
 def apagar(pin):
+	# GPIO.output( pin , False )
+	GPIO.output(pin, GPIO.LOW)
 	print "Apagando PIN: " + str(pin)
-	GPIO.output( pin , False )
 
 def delay(second):
 	time.sleep( second )
 
 def encender(pin):
+	# GPIO.output( pin , True )
+	GPIO.output(pin , GPIO.HIGH)
 	print "Encendiendo PIN: " + str(pin)
-	GPIO.output( pin , True )
 
 def limpiar():
-	print "Limpiando ..."
 	GPIO.cleanup()
+	print "Limpiando ..."
 
-'''
-def blink():
-        print "Ejecucion iniciada..."
-        iteracion = 0
-        while iteracion < 30: ## Segundos que durara la funcion
-                GPIO.output(17, True) ## Enciendo el 17
-                GPIO.output(27, False) ## Apago el 27
-                time.sleep(1) ## Esperamos 1 segundo
-                GPIO.output(17, False) ## Apago el 17
-                GPIO.output(27, True) ## Enciendo el 27
-                time.sleep(1) ## Esperamos 1 segundo
-                iteracion = iteracion + 2 ## Sumo 2 porque he hecho dos parpadeos
-        print "Ejecucion finalizada"
-        GPIO.cleanup() ## Hago una limpieza de los GPIO
-'''
+def test1(channel):
+	print "value: " + str( GPIO.input(channel) )
+	if GPIO.input(channel) == 0:
+		encender(17)
+	else:
+		apagar(17)
 
-iniciar(17)
-iniciar(27)
-
-encender(27)
-delay(2)
-apagar(27)
-encender(17)
-delay(2)
-apagar(17)
-
-limpiar()
-
-# blink() ## Hago la llamada a la funcion blink
+try:
+	iniciar_entrada(23)
+	iniciar_salida(17)
+	GPIO.add_event_detect(23, GPIO.BOTH, callback=test1)
+	delay(300)
+finally:
+	limpiar()
