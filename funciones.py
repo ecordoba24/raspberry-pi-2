@@ -1,12 +1,11 @@
 import RPi.GPIO as GPIO
 import time
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(17, GPIO.OUT) ## GPIO 17 como salida
-# GPIO.setup(27, GPIO.OUT) ## GPIO 27 como salida
 
 def iniciar(pin):
 	print "Iniciar PIN: " + str(pin)
 	GPIO.setup( pin , GPIO.OUT )
+	# GPIO como salida
 
 def apagar(pin):
 	print "Apagando PIN: " + str(pin)
