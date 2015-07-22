@@ -1,0 +1,28 @@
+# cambiar de directorio
+cd
+
+# listar
+ls
+	-a # mostrsr todo
+
+# mover
+mv /que /hacia
+
+# copiar
+cp /que / hacia
+	-r # recursibo
+
+# make direftory - crear carpeta
+mkdir
+
+# remove
+rm
+	-rf
+	-r # recursivo
+	-f # forzado sin confirmacion
+
+# limpiar
+clear
+
+# documentacion
+man comando
